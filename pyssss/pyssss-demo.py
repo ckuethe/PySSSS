@@ -21,7 +21,7 @@ from pysssslib import *
 
 if __name__ == "__main__":
   import StringIO
-  input = StringIO.StringIO("Too many secrets, Marty!")
+  input = StringIO.StringIO("GF256OK Too many secrets, Marty!")
   outputs = []
   n = 10
   k = 4
@@ -49,9 +49,20 @@ if __name__ == "__main__":
   for i in inputs:
     print i.getvalue().encode('hex')
     i.seek(0)
-
   output = StringIO.StringIO()
   decode(inputs,output)  
   print ""
-  print " input text: %s" % input.getvalue()
+
+  print "decoding insufficient shares "
+  inputs.pop()
+  for i in inputs:
+    print i.getvalue().encode('hex')
+    i.seek(0)
+  badoutput = StringIO.StringIO()
+  decode(inputs,badoutput)
+  badoutput = badoutput.getvalue()
+  print ""
+
+  print "input  text: %s" % input.getvalue()
   print "output text: %s" % output.getvalue()
+  print "short decode %s" % ("FAIL (found 'GF256OK')" if ('GF256OK' in badoutput) else "PASS (missing 'GF256OK')")
