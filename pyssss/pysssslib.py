@@ -105,6 +105,9 @@ def decode(keys,output):
   
   data = ""
   
+  for i in keys:
+    i.seek(0)
+  output.seek(0)
 
   # End Of Key    
   eok = False

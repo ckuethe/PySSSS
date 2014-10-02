@@ -48,7 +48,6 @@ if __name__ == "__main__":
   print "decoding shares "
   for i in inputs:
     print i.getvalue().encode('hex')
-    i.seek(0)
   output = StringIO.StringIO()
   decode(inputs,output)  
   print ""
@@ -57,7 +56,6 @@ if __name__ == "__main__":
   inputs.pop()
   for i in inputs:
     print i.getvalue().encode('hex')
-    i.seek(0)
   badoutput = StringIO.StringIO()
   decode(inputs,badoutput)
   badoutput = badoutput.getvalue()
