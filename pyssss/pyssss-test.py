@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# XXX should reassembly be possible with incorrect fragments?
+#  Copyright 2014 Chris Kuethe
 
 import StringIO
 from pysssslib import s4_encode, s4_decode
