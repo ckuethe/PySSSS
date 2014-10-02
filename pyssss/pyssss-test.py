@@ -35,9 +35,9 @@ for num_bad in range(2):
 		try:
 			status = s4_decode(shares,output)
 		except:
-			status = -1
+			status = False
 
-		expected = 0 if (i >= (num_needed + num_bad)) else -1
+		expected = True if (i >= (num_needed + num_bad)) else False
 		if (status == expected):
 			statusmsg = "PASS"
 		else:

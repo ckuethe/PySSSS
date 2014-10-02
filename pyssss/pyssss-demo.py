@@ -63,5 +63,5 @@ if __name__ == "__main__":
   print ""
 
   print "input  text: %s" % input.getvalue()
-  print "output text: %s\n\treturn value %d (should be 0)" % (output.getvalue(), rvsuccess)
-  print "short decode return value %d (should be -1)" % rvfail
+  print "output text: %s\n\treturn value %d (should be %d)" % (output.getvalue(), rvsuccess, True)
+  print "short decode return value %d (should be %d)" % (rvfail, False)

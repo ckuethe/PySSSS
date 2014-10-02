@@ -155,7 +155,7 @@ def s4_decode(keys,output):
   # check for successful decode
   signature = data[0:8]
   data = data[8:]
-  rv = 0 if ('GF256OK_' in signature) else -1
+  rv = True if ('GF256OK_' in signature) else False
 
   output.write(data)
   output.seek(0)
