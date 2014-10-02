@@ -17,7 +17,7 @@
 #
 # -*- coding: utf-8 -*-
 
-from pysssslib import *
+from pysssslib import s4_encode, s4_decode
 
 if __name__ == "__main__":
   import StringIO
@@ -28,7 +28,7 @@ if __name__ == "__main__":
   for i in xrange(n):
     outputs.append(StringIO.StringIO())
 
-  encode(input,outputs,k)
+  s4_encode(input,outputs,k)
 
   print "output shares %d-of-%d" % (k, n)
   for i in xrange(n):
@@ -36,6 +36,7 @@ if __name__ == "__main__":
   print ""
 
   print "randomly selecting %d shares" % k
+  import random
   inputs = []
   randIndex = random.sample(range(n), k)
   for i in randIndex:
@@ -49,7 +50,7 @@ if __name__ == "__main__":
   for i in inputs:
     print i.getvalue().encode('hex')
   output = StringIO.StringIO()
-  rvsuccess = decode(inputs,output)
+  rvsuccess = s4_decode(inputs,output)
   print ""
 
   print "decoding insufficient shares "
@@ -57,7 +58,7 @@ if __name__ == "__main__":
   for i in inputs:
     print i.getvalue().encode('hex')
   badoutput = StringIO.StringIO()
-  rvfail = decode(inputs,badoutput)
+  rvfail = s4_decode(inputs,badoutput)
   badoutput = badoutput.getvalue()
   print ""
 

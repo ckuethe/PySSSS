@@ -42,7 +42,7 @@ def pickRandomPolynomial(degree,zero):
   return PGF256(coeffs)
 
 
-def encodeByte(byte,n,k):
+def _s4_encodeByte(byte,n,k):
   # Allocate array to track duplicates
   picked = [False for i in xrange(0,256)]
   
@@ -58,7 +58,8 @@ def encodeByte(byte,n,k):
     # Pick a not yet picked X value in [0,255],
     # we need a value in [1,255] but to have a credible entropy for bytes we pick it in [0,255]
     # and simply output garbage if we picked 0
-    # If we do not do that then the output keys will NEVER have 00 in even positions (starting at 0) which would be a little suspicious for some random data
+    # If we do not do that then the output keys will NEVER have 00 in even positions (starting
+    # at 0) which would be a little suspicious for some random data
     #
         
     pick = random.randint(1,255)
@@ -82,14 +83,14 @@ def encodeByte(byte,n,k):
 
   return keys
 
-def encode(data,outputs,k):
+def s4_encode(data,outputs,k):
       
   n = len(outputs)
 
   # Inject signature
   for char in list('GF256OK_'):
     byte = ord(char)
-    charkeys = encodeByte(byte,n,k)
+    charkeys = _s4_encodeByte(byte,n,k)
     for i in xrange(0,n):
       outputs[i].write(charkeys[i])
 
@@ -100,12 +101,12 @@ def encode(data,outputs,k):
       break
     byte = ord(char)
     
-    charkeys = encodeByte(byte,n,k)
+    charkeys = _s4_encodeByte(byte,n,k)
 
     for i in xrange(0,n):
       outputs[i].write(charkeys[i])
 
-def decode(keys,output):
+def s4_decode(keys,output):
   
   interpolator = PGF256Interpolator()
   zero = GF256elt(0)
