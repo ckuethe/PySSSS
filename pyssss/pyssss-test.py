@@ -32,12 +32,16 @@ for num_bad in range(2):
 			break
 
 		output = StringIO.StringIO()
-		try:
+		try: # decode returns True for success, False for failure
 			status = s4_decode(shares,output)
-		except:
+		except: # catch math, IO exceptions and simply mark the test as failed
 			status = False
 
-		expected = True if (i >= (num_needed + num_bad)) else False
+		# expected results:
+		# (m <= x <= n) fragments will allow for reassembly
+		# (x < m) fragments do not allow for reassembly
+		# the presence of incorrect fragments prevents reassembly
+		expected = True if ((i >= num_needed) and (num_bad == 0)) else False
 		if (status == expected):
 			statusmsg = "PASS"
 		else:
