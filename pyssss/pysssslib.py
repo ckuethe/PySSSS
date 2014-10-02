@@ -86,6 +86,13 @@ def encode(data,outputs,k):
       
   n = len(outputs)
 
+  # Inject signature
+  for char in list('GF256OK_'):
+    byte = ord(char)
+    charkeys = encodeByte(byte,n,k)
+    for i in xrange(0,n):
+      outputs[i].write(charkeys[i])
+
   # Loop through the chars        
   while True:
     char = data.read(1)
@@ -107,7 +114,6 @@ def decode(keys,output):
   
   for i in keys:
     i.seek(0)
-  output.seek(0)
 
   # End Of Key    
   eok = False
@@ -143,4 +149,13 @@ def decode(keys,output):
 
     # Decode next byte
     byte = interpolator.interpolate(points).f(zero)
-    output.write(chr(byte))
+    data += chr(byte)
+
+  # check for successful decode
+  signature = data[0:8]
+  data = data[8:]
+  rv = 0 if ('GF256OK_' in signature) else -1
+
+  output.write(data)
+  output.seek(0)
+  return rv
